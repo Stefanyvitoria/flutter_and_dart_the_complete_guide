@@ -4,7 +4,8 @@ import 'package:intl/intl.dart';
 
 class ListTransactions extends StatefulWidget {
   final List<Transaction> transactions;
-  ListTransactions(this.transactions);
+  final Function deleteTransaction;
+  ListTransactions(this.transactions, this.deleteTransaction);
 
   @override
   _ListTransactionsState createState() => _ListTransactionsState();
@@ -14,61 +15,56 @@ class _ListTransactionsState extends State<ListTransactions> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 400,
-      child: ListView.builder(
-        itemCount: widget.transactions.length,
-        itemBuilder: (ctx, index) {
-          Transaction transaction = widget.transactions[index];
-          return Container(
-            child: Card(
-              elevation: 3,
-              child: Row(
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.purple,
-                        width: 2,
-                      ),
-                    ),
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      "${transaction.amount.toStringAsFixed(2)}",
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Text(
-                          "${transaction.title}",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: Text(
-                          DateFormat.yMMMd().format(transaction.date),
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+      height: 300,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: ListView.builder(
+          itemCount: widget.transactions.length,
+          itemBuilder: (ctx, index) {
+            Transaction transaction = widget.transactions[index];
+            return Card(
+              margin: EdgeInsets.symmetric(
+                vertical: 8,
+                horizontal: 5,
               ),
-            ),
-          );
-        },
+              elevation: 5,
+              child: ListTile(
+                leading: CircleAvatar(
+                  radius: 30,
+                  child: FittedBox(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Text(
+                        "\$${transaction.amount.toStringAsFixed(2)}",
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .appBarTheme
+                              .titleTextStyle
+                              .color,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                title: Text(
+                  "${transaction.title}",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                subtitle: Text(
+                  DateFormat.yMMMd().format(transaction.date),
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                trailing: IconButton(
+                  onPressed: () => widget.deleteTransaction(transaction.id),
+                  color: Theme.of(context).errorColor,
+                  icon: Icon(
+                    Icons.delete,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
