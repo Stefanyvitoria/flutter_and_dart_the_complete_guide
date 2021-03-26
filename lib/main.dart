@@ -23,8 +23,10 @@ ThemeData _myTheme() {
     errorColor: Colors.red,
     primarySwatch: Colors.purple,
     accentColor: Colors.yellow[700],
+    fontFamily: 'Quicksand',
     appBarTheme: AppBarTheme(
       titleTextStyle: TextStyle(
+        fontFamily: 'OpenSans',
         fontSize: 20,
         fontWeight: FontWeight.bold,
         color: Colors.white,
@@ -32,7 +34,8 @@ ThemeData _myTheme() {
     ),
     textTheme: TextTheme(
       bodyText1: TextStyle(
-        fontSize: 17,
+        fontFamily: 'OpenSans',
+        fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
       bodyText2: TextStyle(
