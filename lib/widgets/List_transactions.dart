@@ -15,7 +15,7 @@ class _ListTransactionsState extends State<ListTransactions> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
+      height: 465,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: ListView.builder(
